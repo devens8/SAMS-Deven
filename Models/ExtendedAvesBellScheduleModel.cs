@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SAMS_Deven.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace SAMS_Deven.Models
 {

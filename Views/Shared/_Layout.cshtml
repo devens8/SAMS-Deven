@@ -22,9 +22,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+                        @if (User.IsInRole("Developer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="UserToRole">Role</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DailyBellScheduleModels" asp-action="Index">Daily Bell Schedule</a>
                         </li>
@@ -36,7 +45,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="ExtendedAvesBellScheduleModels" asp-action="Index"> Extended Aves Bell Schedule</a>
-                        </li>
+                        </li> 
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

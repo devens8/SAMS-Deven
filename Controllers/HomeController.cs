@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAMS_Deven.Models;
 using System.Diagnostics;
@@ -17,7 +18,7 @@ namespace SAMS_Deven.Controllers
         {
             return View();
         }
-
+        [Authorize(Roles =("Developer"))]
         public IActionResult Privacy()
         {
             return View();
