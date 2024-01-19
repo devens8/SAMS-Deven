@@ -1,13 +1,20 @@
-﻿using SAMS_Deven.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SAMS_Deven.Models
 {
     public class TeachingScheduleModel
     {
-        public int ScheduleID { get; set; }
-        public List<string> DaysOfWeek { get; set; } = null!;
+        [Key]
+        [Display(Name = ("Schedule ID"))]
+        public int ScheduleID { get; set; } = 0!;
+        [Display(Name = ("Teacher ID"))]
+        public string TeacherID { get; set; } = null!;
+        [Display(Name = ("Teaching Days"))]
+        public string DaysOfWeek { get; set; } = null!;
 
+        
         //Navigation properties
-        public ICollection<TeacherInfoModel>? Teachers { get; set; }
+        public TeacherInfoModel? Teacher { get; set; }
+        public RoomScheduleModel? RoomSchedule { get; set; }
     }
 }

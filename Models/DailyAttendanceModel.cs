@@ -1,18 +1,22 @@
-﻿using SAMS_Deven.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SAMS_Deven.Models
 {
     public class DailyAttendanceModel
     {
         [Key]
+        [Display(Name = ("Att. ID"))]
         public int AttendanceId { get; set; }
+        [Display(Name = ("Student ID"))]
         public int StudentId { get; set; } = 0!;
+        [Display(Name = ("Date"))]
         public DateTime? AttendanceDate { get; set; }
+        [Display(Name = ("Status"))]
         public string Status { get; set; } = null!;
+        [Display(Name = ("Reason for Absence"))]
         public string ReasonForAbsence { get; set; } = null!;
 
         //Navigation properties
-        public StudentInfoModel? Student { get; set; }
+        public StudentInfoModel? Student {  get; set; }
     }
 }

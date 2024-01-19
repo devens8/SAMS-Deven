@@ -1,21 +1,27 @@
-﻿using SAMS_Deven.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SAMS_Deven.Models
 {
     public class BellAttendanceModel
     {
-        [Key]
+        [Display(Name = ("Att. ID"))]
         public string BellAttendanceId { get; set; } = null!;
+        [Key]
+        [Display(Name = ("Student ID"))]
         public int StudentId { get; set; } = 0!;
-        public int EnrollmentId { get; set; } = 0!;
-        public DateTime Date { get; set; }
+        [Display(Name = ("Date/Time"))]
+        public DateTime DateTime { get; set; }
+        [Display(Name = ("Status"))]
         public string Status { get; set; } = null!;
+        [Display(Name = ("Reason For Absence"))]
         public string ReasonForAbsence { get; set; } = null!;
+        [Display(Name = ("Bell Number"))]
         public int BellNumId { get; set; } = 0!;
+        [Display(Name = ("Course Name"))]
+        public string CourseName { get; set; } = null!;
 
         //Navigation properties
-        public CourseEnrollmentModel? CourseEnrollment { get; set; }
+        public StudentScheduleInfoModel? StudentScheduleInfoModel { get; set; }
         public StudentInfoModel? StudentInfo { get; set; }
     }
 }

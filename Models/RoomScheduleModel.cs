@@ -1,18 +1,21 @@
-﻿using SAMS_Deven.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SAMS_Deven.Models
 {
     public class RoomScheduleModel
     {
         [Key]
+        [Display(Name = ("Schedule ID"))]
         public int RoomScheduleID { get; set; }
+        [Display(Name = ("Room ID"))]
         public int RoomId { get; set; } = 0!;
+        [Display(Name = ("Teacher ID"))]
         public string TeacherID { get; set; } = null!;
+        [Display(Name = ("Teaching Schedule ID"))]
         public int ScheduleID { get; set; } = 0!;
 
         //Navigation properties
-        public RoomLocationInfoModel? Room { get; set; }
+        public RoomLocationInfoModel? Room {  get; set; }
         public TeacherInfoModel? Teacher { get; set; }
         public TeachingScheduleModel? Schedule { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿using SAMS_Deven.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SAMS_Deven.Models
@@ -7,17 +6,26 @@ namespace SAMS_Deven.Models
     public class CounselorModel
     {
         [Key]
-        public int CounselorId { get; set; }
+        [Display(Name = ("Counselor ID"))]
+        public string CounselorId { get; set; } = null!;
+        [Display(Name = ("First Name"))]
         public string CounselorFirstName { get; set; } = null!;
+        [Display(Name = ("Middle Name"))]
         public string CounselorMiddleName { get; set; } = null!;
+        [Display(Name = ("Last Name"))]
         public string CounselorLastName { get; set; } = null!;
+        [Display(Name = ("Preferred Name"))]
         public string CounselorPreferredName { get; set; } = null!;
+        [Display(Name = ("Email Address"))]
         public string CounselorEmail { get; set; } = null!;
+        [Display(Name = ("Phone Ext."))]
         public int CounselorPhone { get; set; } = 0!;
 
         //Navigation Properties
-        public ICollection<StudentInfoModel>? Student { get; set; }
+        public ICollection<StudentInfoModel>? CounselorManagedStudents { get; set; }
         public ICollection<HallPassInfoModel>? AssignedHallPasses { get; set; }
         public ICollection<HallPassInfoModel>? AddressedHallPasses { get; set; }
+        public ICollection<PassRequestInfoModel>? RequestAssignedHallPasses { get; set; }
+        public ICollection<PassRequestInfoModel>? RequestAddressedHallPasses { get; set; }
     }
 }
