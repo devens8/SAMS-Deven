@@ -12,40 +12,22 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SAMS_Deven</a>
+                <a class="navbar-brand" style="visibility:visible; color:black;" asp-area="" asp-controller="Home" asp-action="Index">SAMS_Deven</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon" style="color:black;">☰</span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-
-                        @if (User.IsInRole("Developer"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="UserToRole">Role</a>
-                            </li>
-                        }
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DailyBellScheduleModels" asp-action="Index">Daily Bell Schedule</a>
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/AddAccount">Add Accounts</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TwoHrDelayBellScheduleModels" asp-action="Index">Two Hour Delay Bell Schedule</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PepRallyBellScheduleModels" asp-action="Index">Pep Rally Bell Schedule</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ExtendedAvesBellScheduleModels" asp-action="Index"> Extended Aves Bell Schedule</a>
-                        </li> 
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -61,11 +43,36 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - SAMS_Deven - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <a class="btn" id="themeButton">Dark Mode - <img src="/images/DarkMode.png" class="navbar-toggler-icon" style="border-radius:20rem;" /></a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        //Check for saved theme preference in localStorage
+        let theme = localStorage.getItem('theme');
+
+        //Apply the saved theme preference
+        if (theme) {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+        } else {
+            // If there is no saved preference, you can default to light mode
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+        }
+
+        //Function to switch themes
+        function switchTheme() {
+            var currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            var newTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        //Add event listener to theme button
+        document.getElementById('themeButton').addEventListener('click', switchTheme);
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -22,18 +22,20 @@ namespace SAMS_Deven.Controllers
         // GET: DailyBellScheduleModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DailyBellScheduleModel.ToListAsync());
+              return _context.dailyBellScheduleModels != null ? 
+                          View(await _context.dailyBellScheduleModels.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.dailyBellScheduleModels'  is null.");
         }
 
         // GET: DailyBellScheduleModels/Details/5
         public async Task<IActionResult> Details(TimeSpan? id)
         {
-            if (id == null)
+            if (id == null || _context.dailyBellScheduleModels == null)
             {
                 return NotFound();
             }
 
-            var dailyBellScheduleModel = await _context.DailyBellScheduleModel
+            var dailyBellScheduleModel = await _context.dailyBellScheduleModels
                 .FirstOrDefaultAsync(m => m.StartTime == id);
             if (dailyBellScheduleModel == null)
             {
@@ -68,12 +70,12 @@ namespace SAMS_Deven.Controllers
         // GET: DailyBellScheduleModels/Edit/5
         public async Task<IActionResult> Edit(TimeSpan? id)
         {
-            if (id == null)
+            if (id == null || _context.dailyBellScheduleModels == null)
             {
                 return NotFound();
             }
 
-            var dailyBellScheduleModel = await _context.DailyBellScheduleModel.FindAsync(id);
+            var dailyBellScheduleModel = await _context.dailyBellScheduleModels.FindAsync(id);
             if (dailyBellScheduleModel == null)
             {
                 return NotFound();
@@ -119,12 +121,12 @@ namespace SAMS_Deven.Controllers
         // GET: DailyBellScheduleModels/Delete/5
         public async Task<IActionResult> Delete(TimeSpan? id)
         {
-            if (id == null)
+            if (id == null || _context.dailyBellScheduleModels == null)
             {
                 return NotFound();
             }
 
-            var dailyBellScheduleModel = await _context.DailyBellScheduleModel
+            var dailyBellScheduleModel = await _context.dailyBellScheduleModels
                 .FirstOrDefaultAsync(m => m.StartTime == id);
             if (dailyBellScheduleModel == null)
             {
@@ -139,19 +141,23 @@ namespace SAMS_Deven.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(TimeSpan id)
         {
-            var dailyBellScheduleModel = await _context.DailyBellScheduleModel.FindAsync(id);
+            if (_context.dailyBellScheduleModels == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.dailyBellScheduleModels'  is null.");
+            }
+            var dailyBellScheduleModel = await _context.dailyBellScheduleModels.FindAsync(id);
             if (dailyBellScheduleModel != null)
             {
-                _context.DailyBellScheduleModel.Remove(dailyBellScheduleModel);
+                _context.dailyBellScheduleModels.Remove(dailyBellScheduleModel);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DailyBellScheduleModelExists(TimeSpan id)
         {
-            return _context.DailyBellScheduleModel.Any(e => e.StartTime == id);
+          return (_context.dailyBellScheduleModels?.Any(e => e.StartTime == id)).GetValueOrDefault();
         }
     }
 }

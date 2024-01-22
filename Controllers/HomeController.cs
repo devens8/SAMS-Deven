@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAMS_Deven.Models;
 using System.Diagnostics;
@@ -13,12 +13,12 @@ namespace SAMS_Deven.Controllers
         {
             _logger = logger;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
-        [Authorize(Roles =("Developer"))]
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
