@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SAMS_Deven.Models
+namespace SAMS.Models
 {
     public class StudentScheduleInfoModel
     {
@@ -30,7 +30,7 @@ namespace SAMS_Deven.Models
         //Navigation properties
         public StudentInfoModel? Student {  get; set; }
         public ICollection<CourseEnrollmentModel>? CourseEnrollments { get; set; }
-        public BellAttendanceModel? BellAttendance { get; set; }
+        public ICollection<BellAttendanceModel>? BellAttendance { get; set; }
         public ICollection<FastPassModel>? FastPasses { get; set; }
     }
 }

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SAMS_Deven.Data;
+using SAMS.Data;
 
 #nullable disable
 
-namespace SAMS_Deven.Data.Migrations
+namespace SAMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace SAMS_Deven.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -74,13 +74,101 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("SAMS.Controllers.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("ActivationCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -116,10 +204,16 @@ namespace SAMS_Deven.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("SchoolId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("UserExperienceEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
@@ -139,106 +233,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("SAMS_Deven.Models.ActivationModel", b =>
-                {
-                    b.Property<int>("StudId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StudId");
-
-                    b.ToTable("ActivationModel");
-                });
-
-            modelBuilder.Entity("SAMS_Deven.Models.ActiveCourseInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.ActiveCourseInfoModel", b =>
                 {
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
@@ -291,17 +286,45 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("activeCourseInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.AdminInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.AdminInfoModel", b =>
                 {
                     b.Property<string>("AdminID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminEmailMod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminFirstNameMod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminLabelMod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminLastNameMod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminMiddleNameMod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminPhoneMod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminPreferredNameMod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AdminID");
 
                     b.ToTable("adminInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.AttendanceOfficeMemberModel", b =>
+            modelBuilder.Entity("SAMS.Models.AttendanceOfficeMemberModel", b =>
                 {
                     b.Property<string>("AoMemberID")
                         .HasColumnType("nvarchar(450)");
@@ -335,21 +358,16 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("attendanceOfficeMemberModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.BellAttendanceModel", b =>
+            modelBuilder.Entity("SAMS.Models.BellAttendanceModel", b =>
                 {
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("BellAttendanceId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BellAttendanceId")
+                        .HasColumnType("int");
 
                     b.Property<int>("BellNumId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CourseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
@@ -358,16 +376,21 @@ namespace SAMS_Deven.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StudentId");
 
-                    b.ToTable("BellAttendanceModel");
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("bellAttendanceModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.CounselorModel", b =>
+            modelBuilder.Entity("SAMS.Models.CounselorModel", b =>
                 {
                     b.Property<string>("CounselorId")
                         .HasColumnType("nvarchar(450)");
@@ -397,19 +420,16 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasKey("CounselorId");
 
-                    b.ToTable("CounselorModel");
+                    b.ToTable("counselorModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.CourseEnrollmentModel", b =>
+            modelBuilder.Entity("SAMS.Models.CourseEnrollmentModel", b =>
                 {
                     b.Property<int>("EnrollmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnrollmentId"));
-
-                    b.Property<int?>("ActiveCoursesCourseId")
-                        .HasColumnType("int");
 
                     b.Property<int>("EnrollmentCourseId")
                         .HasColumnType("int");
@@ -420,21 +440,16 @@ namespace SAMS_Deven.Data.Migrations
                     b.Property<int>("EnrollmentStudentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentSchedulesStudentID")
-                        .HasColumnType("int");
-
                     b.HasKey("EnrollmentId");
 
-                    b.HasIndex("ActiveCoursesCourseId");
+                    b.HasIndex("EnrollmentCourseId");
 
                     b.HasIndex("EnrollmentStudentId");
 
-                    b.HasIndex("StudentSchedulesStudentID");
-
-                    b.ToTable("CourseEnrollmentModel");
+                    b.ToTable("courseEnrollmentModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.DailyAttendanceModel", b =>
+            modelBuilder.Entity("SAMS.Models.DailyAttendanceModel", b =>
                 {
                     b.Property<int>("AttendanceId")
                         .ValueGeneratedOnAdd()
@@ -460,10 +475,10 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("DailyAttendanceModel");
+                    b.ToTable("dailyAttendanceModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.DailyBellScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.DailyBellScheduleModel", b =>
                 {
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
@@ -480,10 +495,10 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasKey("StartTime");
 
-                    b.ToTable("DailyBellScheduleModel");
+                    b.ToTable("dailyBellScheduleModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.DeveloperInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.DeveloperInfoModel", b =>
                 {
                     b.Property<int>("DeveloperID")
                         .ValueGeneratedOnAdd()
@@ -516,7 +531,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("developerInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.EASuportInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.EASuportInfoModel", b =>
                 {
                     b.Property<string>("EaID")
                         .HasColumnType("nvarchar(450)");
@@ -545,7 +560,7 @@ namespace SAMS_Deven.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EaStudentManaged")
+                    b.Property<int?>("EaStudentManaged")
                         .HasColumnType("int");
 
                     b.HasKey("EaID");
@@ -553,7 +568,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("eASuportInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.ExtendedAvesBellScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.ExtendedAvesBellScheduleModel", b =>
                 {
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
@@ -573,7 +588,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("extendedAvesModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.FastPassModel", b =>
+            modelBuilder.Entity("SAMS.Models.FastPassModel", b =>
                 {
                     b.Property<string>("FastPassIDMod")
                         .HasColumnType("nvarchar(450)");
@@ -593,9 +608,6 @@ namespace SAMS_Deven.Data.Migrations
                     b.Property<int>("EndLocationID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("datetime2");
 
@@ -609,41 +621,20 @@ namespace SAMS_Deven.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StudentScheduleStudentID")
-                        .HasColumnType("int");
-
                     b.HasKey("FastPassIDMod");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("CourseIDFromStudentSchedule");
+
+                    b.HasIndex("EndLocationID");
 
                     b.HasIndex("StudentID");
-
-                    b.HasIndex("StudentScheduleStudentID");
 
                     b.ToTable("fastPassModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.HallPassInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.HallPassInfoModel", b =>
                 {
                     b.Property<string>("HallPassID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignedByAdminAdminID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignedByAttendanceOfficeMemberAoMemberID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignedByCounselorCounselorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignedByLawEnfLawenfID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignedByNurseNurseID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignedByTeacherTeacherID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("BellNumber")
@@ -661,11 +652,11 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.Property<string>("HallPassAddressedByID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HallPassAssignedByID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("datetime2");
@@ -679,24 +670,16 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasKey("HallPassID");
 
-                    b.HasIndex("AssignedByAdminAdminID");
+                    b.HasIndex("HallPassAddressedByID");
 
-                    b.HasIndex("AssignedByAttendanceOfficeMemberAoMemberID");
-
-                    b.HasIndex("AssignedByCounselorCounselorId");
-
-                    b.HasIndex("AssignedByLawEnfLawenfID");
-
-                    b.HasIndex("AssignedByNurseNurseID");
-
-                    b.HasIndex("AssignedByTeacherTeacherID");
+                    b.HasIndex("HallPassAssignedByID");
 
                     b.HasIndex("StudentID");
 
                     b.ToTable("hallPassInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.LawEnforcementInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.LawEnforcementInfoModel", b =>
                 {
                     b.Property<string>("LawenfID")
                         .HasColumnType("nvarchar(450)");
@@ -730,7 +713,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("lawEnforcementInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.NurseInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.NurseInfoModel", b =>
                 {
                     b.Property<string>("NurseID")
                         .HasColumnType("nvarchar(450)");
@@ -764,7 +747,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("nurseInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.PassRequestInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.PassRequestInfoModel", b =>
                 {
                     b.Property<int>("PassRequestId")
                         .ValueGeneratedOnAdd()
@@ -822,7 +805,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("passRequestInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.PepRallyBellScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.PepRallyBellScheduleModel", b =>
                 {
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
@@ -842,7 +825,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("pepRallyBellScheduleModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.RoomLocationInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.RoomLocationInfoModel", b =>
                 {
                     b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
@@ -877,7 +860,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("roomLocationInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.RoomScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.RoomScheduleModel", b =>
                 {
                     b.Property<int>("RoomScheduleID")
                         .ValueGeneratedOnAdd()
@@ -905,16 +888,13 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasIndex("TeacherID");
 
-                    b.ToTable("RoomScheduleModel");
+                    b.ToTable("roomScheduleModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.StudentInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.StudentInfoModel", b =>
                 {
                     b.Property<int>("StudentID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentID"));
 
                     b.Property<int>("ActivationCode")
                         .HasColumnType("int");
@@ -946,7 +926,6 @@ namespace SAMS_Deven.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StudentEAID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StudentEmailMod")
@@ -982,13 +961,12 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasIndex("StudentCounselorID");
 
-                    b.HasIndex("StudentEAID")
-                        .IsUnique();
+                    b.HasIndex("StudentEAID");
 
                     b.ToTable("studentInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.StudentScheduleInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.StudentScheduleInfoModel", b =>
                 {
                     b.Property<int>("StudentID")
                         .HasColumnType("int");
@@ -1026,14 +1004,14 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("studentScheduleInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.SubstituteInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.SubstituteInfoModel", b =>
                 {
                     b.Property<string>("SubID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ManagedTeacherIdMod")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ScheduledDate")
                         .HasColumnType("datetime2");
@@ -1064,13 +1042,10 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasKey("SubID");
 
-                    b.HasIndex("ManagedTeacherIdMod")
-                        .IsUnique();
-
                     b.ToTable("substituteInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.SynnLabQRNodeModel", b =>
+            modelBuilder.Entity("SAMS.Models.SynnLabQRNodeModel", b =>
                 {
                     b.Property<string>("ScannerID")
                         .HasColumnType("nvarchar(450)");
@@ -1102,9 +1077,12 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("synnLabQRNodeModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.TeacherInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.TeacherInfoModel", b =>
                 {
                     b.Property<string>("TeacherID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignedSubID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TeacherEmailMod")
@@ -1139,10 +1117,12 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.HasKey("TeacherID");
 
+                    b.HasIndex("AssignedSubID");
+
                     b.ToTable("teacherInfoModels");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.TeachingScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.TeachingScheduleModel", b =>
                 {
                     b.Property<int>("ScheduleID")
                         .ValueGeneratedOnAdd()
@@ -1166,7 +1146,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.ToTable("TeachingScheduleModel");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.TwoHrDelayBellScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.TwoHrDelayBellScheduleModel", b =>
                 {
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
@@ -1195,25 +1175,25 @@ namespace SAMS_Deven.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.ApplicationUser", null)
+                    b.HasOne("SAMS.Controllers.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.ApplicationUser", null)
+                    b.HasOne("SAMS.Controllers.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
@@ -1221,48 +1201,37 @@ namespace SAMS_Deven.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.ApplicationUser", null)
+                    b.HasOne("SAMS.Controllers.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.ApplicationUser", null)
+                    b.HasOne("SAMS.Controllers.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.ActivationModel", b =>
+            modelBuilder.Entity("SAMS.Models.ActiveCourseInfoModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "Student")
-                        .WithOne("ActivationCodes")
-                        .HasForeignKey("SAMS_Deven.Models.ActivationModel", "StudId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("SAMS_Deven.Models.ActiveCourseInfoModel", b =>
-                {
-                    b.HasOne("SAMS_Deven.Models.RoomLocationInfoModel", "Room")
+                    b.HasOne("SAMS.Models.RoomLocationInfoModel", "Room")
                         .WithMany("ActiveCourseInfos")
                         .HasForeignKey("CourseRoomID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "Teacher")
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "Teacher")
                         .WithMany("ActiveCourses")
                         .HasForeignKey("CourseTeacherID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.SubstituteInfoModel", "Substitute")
+                    b.HasOne("SAMS.Models.SubstituteInfoModel", "Substitute")
                         .WithMany()
                         .HasForeignKey("SubstituteSubID");
 
@@ -1273,32 +1242,44 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.BellAttendanceModel", b =>
+            modelBuilder.Entity("SAMS.Models.BellAttendanceModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "StudentInfo")
+                    b.HasOne("SAMS.Models.StudentScheduleInfoModel", "StudentScheduleInfoModel")
+                        .WithMany("BellAttendance")
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.StudentInfoModel", "StudentInfo")
                         .WithMany("BellAttendances")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("StudentInfo");
+
+                    b.Navigation("StudentScheduleInfoModel");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.CourseEnrollmentModel", b =>
+            modelBuilder.Entity("SAMS.Models.CourseEnrollmentModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.ActiveCourseInfoModel", "ActiveCourses")
+                    b.HasOne("SAMS.Models.ActiveCourseInfoModel", "ActiveCourses")
                         .WithMany("CourseEnrollments")
-                        .HasForeignKey("ActiveCoursesCourseId");
+                        .HasForeignKey("EnrollmentCourseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "Student")
+                    b.HasOne("SAMS.Models.StudentInfoModel", "Student")
                         .WithMany("CourseEnrollments")
                         .HasForeignKey("EnrollmentStudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.StudentScheduleInfoModel", "StudentSchedules")
+                    b.HasOne("SAMS.Models.StudentScheduleInfoModel", "StudentSchedules")
                         .WithMany("CourseEnrollments")
-                        .HasForeignKey("StudentSchedulesStudentID");
+                        .HasForeignKey("EnrollmentStudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("ActiveCourses");
 
@@ -1307,9 +1288,9 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("StudentSchedules");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.DailyAttendanceModel", b =>
+            modelBuilder.Entity("SAMS.Models.DailyAttendanceModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "Student")
+                    b.HasOne("SAMS.Models.StudentInfoModel", "Student")
                         .WithMany("DailyAttendances")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1318,21 +1299,25 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.FastPassModel", b =>
+            modelBuilder.Entity("SAMS.Models.FastPassModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.RoomLocationInfoModel", "Room")
-                        .WithMany("FastPassesIssued")
-                        .HasForeignKey("RoomId");
+                    b.HasOne("SAMS.Models.StudentScheduleInfoModel", "StudentSchedule")
+                        .WithMany("FastPasses")
+                        .HasForeignKey("CourseIDFromStudentSchedule")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "Student")
+                    b.HasOne("SAMS.Models.RoomLocationInfoModel", "Room")
+                        .WithMany("FastPassesIssued")
+                        .HasForeignKey("EndLocationID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.StudentInfoModel", "Student")
                         .WithMany("FastPasses")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("SAMS_Deven.Models.StudentScheduleInfoModel", "StudentSchedule")
-                        .WithMany("FastPasses")
-                        .HasForeignKey("StudentScheduleStudentID");
 
                     b.Navigation("Room");
 
@@ -1341,69 +1326,81 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("StudentSchedule");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.HallPassInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.HallPassInfoModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.AdminInfoModel", "AssignedByAdmin")
-                        .WithMany("AssignedHallPasses")
-                        .HasForeignKey("AssignedByAdminAdminID");
-
-                    b.HasOne("SAMS_Deven.Models.AttendanceOfficeMemberModel", "AssignedByAttendanceOfficeMember")
-                        .WithMany("AssignedHallPasses")
-                        .HasForeignKey("AssignedByAttendanceOfficeMemberAoMemberID");
-
-                    b.HasOne("SAMS_Deven.Models.CounselorModel", "AssignedByCounselor")
-                        .WithMany("AssignedHallPasses")
-                        .HasForeignKey("AssignedByCounselorCounselorId");
-
-                    b.HasOne("SAMS_Deven.Models.LawEnforcementInfoModel", "AssignedByLawEnf")
-                        .WithMany("AssignedHallPasses")
-                        .HasForeignKey("AssignedByLawEnfLawenfID");
-
-                    b.HasOne("SAMS_Deven.Models.NurseInfoModel", "AssignedByNurse")
-                        .WithMany("AssignedHallPasses")
-                        .HasForeignKey("AssignedByNurseNurseID");
-
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "AssignedByTeacher")
-                        .WithMany("AssignedHallPasses")
-                        .HasForeignKey("AssignedByTeacherTeacherID");
-
-                    b.HasOne("SAMS_Deven.Models.AdminInfoModel", "AddressedByAdmin")
+                    b.HasOne("SAMS.Models.AdminInfoModel", "AddressedByAdmin")
                         .WithMany("AddressedHallPasses")
-                        .HasForeignKey("HallPassID")
+                        .HasForeignKey("HallPassAddressedByID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.AttendanceOfficeMemberModel", "AddressedByAttendanceOfficeMember")
+                    b.HasOne("SAMS.Models.AttendanceOfficeMemberModel", "AddressedByAttendanceOfficeMember")
                         .WithMany("AddressedHallPasses")
-                        .HasForeignKey("HallPassID")
+                        .HasForeignKey("HallPassAddressedByID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.CounselorModel", "AddressedByCounselor")
+                    b.HasOne("SAMS.Models.CounselorModel", "AddressedByCounselor")
                         .WithMany("AddressedHallPasses")
-                        .HasForeignKey("HallPassID")
+                        .HasForeignKey("HallPassAddressedByID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.LawEnforcementInfoModel", "AddressedByLawEnf")
+                    b.HasOne("SAMS.Models.LawEnforcementInfoModel", "AddressedByLawEnf")
                         .WithMany("AddressedHallPasses")
-                        .HasForeignKey("HallPassID")
+                        .HasForeignKey("HallPassAddressedByID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.NurseInfoModel", "AddressedByNurse")
+                    b.HasOne("SAMS.Models.NurseInfoModel", "AddressedByNurse")
                         .WithMany("AddressedHallPasses")
-                        .HasForeignKey("HallPassID")
+                        .HasForeignKey("HallPassAddressedByID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "AddressedByTeacher")
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "AddressedByTeacher")
                         .WithMany("AddressedHallPasses")
-                        .HasForeignKey("HallPassID")
+                        .HasForeignKey("HallPassAddressedByID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "Student")
+                    b.HasOne("SAMS.Models.AdminInfoModel", "AssignedByAdmin")
+                        .WithMany("AssignedHallPasses")
+                        .HasForeignKey("HallPassAssignedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.AttendanceOfficeMemberModel", "AssignedByAttendanceOfficeMember")
+                        .WithMany("AssignedHallPasses")
+                        .HasForeignKey("HallPassAssignedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.CounselorModel", "AssignedByCounselor")
+                        .WithMany("AssignedHallPasses")
+                        .HasForeignKey("HallPassAssignedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.LawEnforcementInfoModel", "AssignedByLawEnf")
+                        .WithMany("AssignedHallPasses")
+                        .HasForeignKey("HallPassAssignedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.NurseInfoModel", "AssignedByNurse")
+                        .WithMany("AssignedHallPasses")
+                        .HasForeignKey("HallPassAssignedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "AssignedByTeacher")
+                        .WithMany("AssignedHallPasses")
+                        .HasForeignKey("HallPassAssignedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SAMS.Models.StudentInfoModel", "Student")
                         .WithMany("HallPasses")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1436,81 +1433,81 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.PassRequestInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.PassRequestInfoModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.AdminInfoModel", "AddressedByAdmin")
+                    b.HasOne("SAMS.Models.AdminInfoModel", "AddressedByAdmin")
                         .WithMany("RequestAddressedHallPasses")
                         .HasForeignKey("HallPassAddressedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.AttendanceOfficeMemberModel", "AddressedByAttendanceOfficeMember")
+                    b.HasOne("SAMS.Models.AttendanceOfficeMemberModel", "AddressedByAttendanceOfficeMember")
                         .WithMany("RequestAddressedHallPasses")
                         .HasForeignKey("HallPassAddressedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.CounselorModel", "AddressedByCounselor")
+                    b.HasOne("SAMS.Models.CounselorModel", "AddressedByCounselor")
                         .WithMany("RequestAddressedHallPasses")
                         .HasForeignKey("HallPassAddressedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.LawEnforcementInfoModel", "AddressedByLawEnf")
+                    b.HasOne("SAMS.Models.LawEnforcementInfoModel", "AddressedByLawEnf")
                         .WithMany("RequestAddressedHallPasses")
                         .HasForeignKey("HallPassAddressedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.NurseInfoModel", "AddressedByNurse")
+                    b.HasOne("SAMS.Models.NurseInfoModel", "AddressedByNurse")
                         .WithMany("RequestAddressedHallPasses")
                         .HasForeignKey("HallPassAddressedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "AddressedByTeacher")
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "AddressedByTeacher")
                         .WithMany("RequestAddressedHallPasses")
                         .HasForeignKey("HallPassAddressedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.AdminInfoModel", "AssignedByAdmin")
+                    b.HasOne("SAMS.Models.AdminInfoModel", "AssignedByAdmin")
                         .WithMany("RequestAssignedHallPasses")
                         .HasForeignKey("HallPassAssignedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.AttendanceOfficeMemberModel", "AssignedByAttendanceOfficeMember")
+                    b.HasOne("SAMS.Models.AttendanceOfficeMemberModel", "AssignedByAttendanceOfficeMember")
                         .WithMany("RequestAssignedHallPasses")
                         .HasForeignKey("HallPassAssignedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.CounselorModel", "AssignedByCounselor")
+                    b.HasOne("SAMS.Models.CounselorModel", "AssignedByCounselor")
                         .WithMany("RequestAssignedHallPasses")
                         .HasForeignKey("HallPassAssignedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.LawEnforcementInfoModel", "AssignedByLawEnf")
+                    b.HasOne("SAMS.Models.LawEnforcementInfoModel", "AssignedByLawEnf")
                         .WithMany("RequestAssignedHallPasses")
                         .HasForeignKey("HallPassAssignedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.NurseInfoModel", "AssignedByNurse")
+                    b.HasOne("SAMS.Models.NurseInfoModel", "AssignedByNurse")
                         .WithMany("RequestAssignedHallPasses")
                         .HasForeignKey("HallPassAssignedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "AssignedByTeacher")
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "AssignedByTeacher")
                         .WithMany("RequestAssignedHallPasses")
                         .HasForeignKey("HallPassAssignedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "Student")
+                    b.HasOne("SAMS.Models.StudentInfoModel", "Student")
                         .WithMany("PassRequestsForStudent")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1543,35 +1540,35 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.RoomLocationInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.RoomLocationInfoModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "Teacher")
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "Teacher")
                         .WithOne("Room")
-                        .HasForeignKey("SAMS_Deven.Models.RoomLocationInfoModel", "RoomAssignedToTeacherID")
+                        .HasForeignKey("SAMS.Models.RoomLocationInfoModel", "RoomAssignedToTeacherID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.RoomScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.RoomScheduleModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.RoomLocationInfoModel", "Room")
+                    b.HasOne("SAMS.Models.RoomLocationInfoModel", "Room")
                         .WithOne("RoomSchedule")
-                        .HasForeignKey("SAMS_Deven.Models.RoomScheduleModel", "RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("SAMS.Models.RoomScheduleModel", "RoomId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.TeachingScheduleModel", "Schedule")
+                    b.HasOne("SAMS.Models.TeachingScheduleModel", "Schedule")
                         .WithOne("RoomSchedule")
-                        .HasForeignKey("SAMS_Deven.Models.RoomScheduleModel", "ScheduleID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("SAMS.Models.RoomScheduleModel", "ScheduleID")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "Teacher")
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "Teacher")
                         .WithMany("RoomSchedules")
                         .HasForeignKey("TeacherID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Room");
@@ -1581,23 +1578,22 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.StudentInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.StudentInfoModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.EASuportInfoModel", "EASuport")
+                    b.HasOne("SAMS.Models.EASuportInfoModel", "EASuport")
                         .WithMany()
                         .HasForeignKey("EASuportEaID");
 
-                    b.HasOne("SAMS_Deven.Models.CounselorModel", "Counselor")
+                    b.HasOne("SAMS.Models.CounselorModel", "Counselor")
                         .WithMany("CounselorManagedStudents")
                         .HasForeignKey("StudentCounselorID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SAMS_Deven.Models.EASuportInfoModel", "AssignedEASuport")
-                        .WithOne("Student")
-                        .HasForeignKey("SAMS_Deven.Models.StudentInfoModel", "StudentEAID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.HasOne("SAMS.Models.EASuportInfoModel", "AssignedEASuport")
+                        .WithMany("Students")
+                        .HasForeignKey("StudentEAID")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AssignedEASuport");
 
@@ -1606,64 +1602,54 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("EASuport");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.StudentScheduleInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.StudentScheduleInfoModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.StudentInfoModel", "Student")
+                    b.HasOne("SAMS.Models.StudentInfoModel", "Student")
                         .WithOne("StudentSchedule")
-                        .HasForeignKey("SAMS_Deven.Models.StudentScheduleInfoModel", "StudentID")
+                        .HasForeignKey("SAMS.Models.StudentScheduleInfoModel", "StudentID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("SAMS_Deven.Models.BellAttendanceModel", "BellAttendance")
-                        .WithOne("StudentScheduleInfoModel")
-                        .HasForeignKey("SAMS_Deven.Models.StudentScheduleInfoModel", "StudentID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("BellAttendance");
 
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.SubstituteInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.SynnLabQRNodeModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "TeacherManaged")
-                        .WithOne("SubTeachers")
-                        .HasForeignKey("SAMS_Deven.Models.SubstituteInfoModel", "ManagedTeacherIdMod")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("TeacherManaged");
-                });
-
-            modelBuilder.Entity("SAMS_Deven.Models.SynnLabQRNodeModel", b =>
-                {
-                    b.HasOne("SAMS_Deven.Models.RoomLocationInfoModel", "Room")
+                    b.HasOne("SAMS.Models.RoomLocationInfoModel", "Room")
                         .WithOne("SynnLabQRNode")
-                        .HasForeignKey("SAMS_Deven.Models.SynnLabQRNodeModel", "SynnlabRoomIDMod")
+                        .HasForeignKey("SAMS.Models.SynnLabQRNodeModel", "SynnlabRoomIDMod")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.TeachingScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.TeacherInfoModel", b =>
                 {
-                    b.HasOne("SAMS_Deven.Models.TeacherInfoModel", "Teacher")
+                    b.HasOne("SAMS.Models.SubstituteInfoModel", "SubTeacher")
+                        .WithMany("TeacherManaged")
+                        .HasForeignKey("AssignedSubID");
+
+                    b.Navigation("SubTeacher");
+                });
+
+            modelBuilder.Entity("SAMS.Models.TeachingScheduleModel", b =>
+                {
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "Teacher")
                         .WithOne("TeachingSchedule")
-                        .HasForeignKey("SAMS_Deven.Models.TeachingScheduleModel", "TeacherID")
+                        .HasForeignKey("SAMS.Models.TeachingScheduleModel", "TeacherID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.ActiveCourseInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.ActiveCourseInfoModel", b =>
                 {
                     b.Navigation("CourseEnrollments");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.AdminInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.AdminInfoModel", b =>
                 {
                     b.Navigation("AddressedHallPasses");
 
@@ -1674,7 +1660,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("RequestAssignedHallPasses");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.AttendanceOfficeMemberModel", b =>
+            modelBuilder.Entity("SAMS.Models.AttendanceOfficeMemberModel", b =>
                 {
                     b.Navigation("AddressedHallPasses");
 
@@ -1685,12 +1671,7 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("RequestAssignedHallPasses");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.BellAttendanceModel", b =>
-                {
-                    b.Navigation("StudentScheduleInfoModel");
-                });
-
-            modelBuilder.Entity("SAMS_Deven.Models.CounselorModel", b =>
+            modelBuilder.Entity("SAMS.Models.CounselorModel", b =>
                 {
                     b.Navigation("AddressedHallPasses");
 
@@ -1703,23 +1684,12 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("RequestAssignedHallPasses");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.EASuportInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.EASuportInfoModel", b =>
                 {
-                    b.Navigation("Student");
+                    b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.LawEnforcementInfoModel", b =>
-                {
-                    b.Navigation("AddressedHallPasses");
-
-                    b.Navigation("AssignedHallPasses");
-
-                    b.Navigation("RequestAddressedHallPasses");
-
-                    b.Navigation("RequestAssignedHallPasses");
-                });
-
-            modelBuilder.Entity("SAMS_Deven.Models.NurseInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.LawEnforcementInfoModel", b =>
                 {
                     b.Navigation("AddressedHallPasses");
 
@@ -1730,7 +1700,18 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("RequestAssignedHallPasses");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.RoomLocationInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.NurseInfoModel", b =>
+                {
+                    b.Navigation("AddressedHallPasses");
+
+                    b.Navigation("AssignedHallPasses");
+
+                    b.Navigation("RequestAddressedHallPasses");
+
+                    b.Navigation("RequestAssignedHallPasses");
+                });
+
+            modelBuilder.Entity("SAMS.Models.RoomLocationInfoModel", b =>
                 {
                     b.Navigation("ActiveCourseInfos");
 
@@ -1741,10 +1722,8 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("SynnLabQRNode");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.StudentInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.StudentInfoModel", b =>
                 {
-                    b.Navigation("ActivationCodes");
-
                     b.Navigation("BellAttendances");
 
                     b.Navigation("CourseEnrollments");
@@ -1760,14 +1739,21 @@ namespace SAMS_Deven.Data.Migrations
                     b.Navigation("StudentSchedule");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.StudentScheduleInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.StudentScheduleInfoModel", b =>
                 {
+                    b.Navigation("BellAttendance");
+
                     b.Navigation("CourseEnrollments");
 
                     b.Navigation("FastPasses");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.TeacherInfoModel", b =>
+            modelBuilder.Entity("SAMS.Models.SubstituteInfoModel", b =>
+                {
+                    b.Navigation("TeacherManaged");
+                });
+
+            modelBuilder.Entity("SAMS.Models.TeacherInfoModel", b =>
                 {
                     b.Navigation("ActiveCourses");
 
@@ -1783,12 +1769,10 @@ namespace SAMS_Deven.Data.Migrations
 
                     b.Navigation("RoomSchedules");
 
-                    b.Navigation("SubTeachers");
-
                     b.Navigation("TeachingSchedule");
                 });
 
-            modelBuilder.Entity("SAMS_Deven.Models.TeachingScheduleModel", b =>
+            modelBuilder.Entity("SAMS.Models.TeachingScheduleModel", b =>
                 {
                     b.Navigation("RoomSchedule");
                 });

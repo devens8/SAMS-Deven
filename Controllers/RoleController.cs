@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SAMS_Deven.Models;
+using SAMS.Models;
 
-namespace SAMS_Deven.Controllers
+namespace SAMS.Controllers
 {
     public class RoleController : Controller
     {

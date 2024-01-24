@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using SAMS_Deven.Controllers;
+using SAMS.Controllers;
 
-namespace SAMS_Deven.Areas.Identity.Pages.Account
+namespace SAMS.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {

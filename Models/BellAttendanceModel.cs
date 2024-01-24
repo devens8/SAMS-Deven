@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SAMS_Deven.Models
+namespace SAMS.Models
 {
     public class BellAttendanceModel
     {
         [Display(Name = ("Att. ID"))]
-        public string BellAttendanceId { get; set; } = null!;
+        public int BellAttendanceId { get; set; } = 0!;
         [Key]
         [Display(Name = ("Student ID"))]
         public int StudentId { get; set; } = 0!;
@@ -18,7 +18,7 @@ namespace SAMS_Deven.Models
         [Display(Name = ("Bell Number"))]
         public int BellNumId { get; set; } = 0!;
         [Display(Name = ("Course Name"))]
-        public string CourseName { get; set; } = null!;
+        public int ScheduleId { get; set; } = 0!;
 
         //Navigation properties
         public StudentScheduleInfoModel? StudentScheduleInfoModel { get; set; }

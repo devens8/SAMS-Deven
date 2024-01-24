@@ -2,13 +2,13 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SAMS_Deven.Controllers;
+using SAMS.Controllers;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
 
-namespace SAMS_Deven.Areas.Identity.Pages
+namespace SAMS.Areas.Identity.Pages
 {
     public class AddAccountModel : PageModel
     {

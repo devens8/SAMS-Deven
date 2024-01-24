@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using SAMS_Deven.Controllers;
+using SAMS.Controllers;
 
-namespace SAMS_Deven.Areas.Identity.Pages.Account.Manage
+namespace SAMS.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {

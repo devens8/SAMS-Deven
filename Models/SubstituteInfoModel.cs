@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SAMS_Deven.Models
+namespace SAMS.Models
 {
     public class SubstituteInfoModel
     {
@@ -25,7 +25,7 @@ namespace SAMS_Deven.Models
         public DateTime ScheduledDate { get; set; }
 
         //Navigation properties
-        public TeacherInfoModel? TeacherManaged {  get; set; }
+        public ICollection<TeacherInfoModel>? TeacherManaged {  get; set; }
 
     }
 }

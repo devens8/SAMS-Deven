@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SAMS_Deven.Models
+namespace SAMS.Models
 {
     public class HallPassInfoModel
     {

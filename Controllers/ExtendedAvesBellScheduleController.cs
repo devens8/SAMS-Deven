@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAMS_Deven.Data;
-using SAMS_Deven.Models;
+using SAMS.Data;
+using SAMS.Models;
 
-namespace SAMS_Deven.Controllers
+namespace SAMS.Controllers
 {
     public class ExtendedAvesBellScheduleController : Controller
     {

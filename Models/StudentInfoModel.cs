@@ -1,13 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace SAMS_Deven.Models
+namespace SAMS.Models
 {
     public class StudentInfoModel
     {
         [Key]
         [DisallowNull]
         [Display(Name = ("Student ID"))]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int StudentID { get; set; } = 0!;
         [Display(Name = ("First Name"))]
         public string StudentFirstNameMod { get; set; } = null!;
@@ -28,9 +31,8 @@ namespace SAMS_Deven.Models
         [DisallowNull]
         [Display(Name = ("EA Support?"))]
         public Boolean HasEASupport { get; set; }
-        [AllowNull]
         [Display(Name = ("EA ID"))]
-        public string StudentEAID { get; set; } = null!;
+        public string? StudentEAID { get; set; } = null!;
         [Display(Name = ("Parent/Guardian 1 Name"))]
         public string Parentguard1NameMod { get; set; } = null!;
         [Display(Name = ("Parent/Guardian 1 Email Address"))]
@@ -53,12 +55,10 @@ namespace SAMS_Deven.Models
         public ICollection<HallPassInfoModel>? HallPasses { get; set; }
         public ICollection<FastPassModel>? FastPasses { get; set; }
         public ICollection<CourseEnrollmentModel>? CourseEnrollments { get; set; }
-        public ActivationModel? ActivationCodes { get; set; }
         public ICollection<BellAttendanceModel>? BellAttendances { get; set; }
         public ICollection<DailyAttendanceModel>? DailyAttendances { get; set; }
         public EASuportInfoModel? EASuport { get; set; }
         public ICollection<PassRequestInfoModel>? PassRequestsForStudent { get; set; }
         public StudentScheduleInfoModel? StudentSchedule { get; set; }
-
     }
 }

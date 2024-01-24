@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SAMS_Deven.Controllers;
+using SAMS.Controllers;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 
-namespace SAMS_Deven.Areas.Identity.Pages.Activation
+namespace SAMS.Areas.Identity.Pages.Activation
 {
     [AllowAnonymous]
     public class ActivateModel : PageModel

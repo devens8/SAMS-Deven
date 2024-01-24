@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using SAMS_Deven.Controllers;
+using SAMS.Controllers;
 
-namespace SAMS_Deven.Areas.Identity.Pages.Account.Manage
+namespace SAMS.Areas.Identity.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {

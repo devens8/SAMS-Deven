@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace SAMS_Deven.Controllers
+namespace SAMS.Controllers
 {
     public class ApplicationUser : IdentityUser
     {

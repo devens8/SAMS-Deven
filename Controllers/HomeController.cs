@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SAMS_Deven.Models;
+using SAMS.Models;
 using System.Diagnostics;
 
-namespace SAMS_Deven.Controllers
+namespace SAMS.Controllers
 {
     public class HomeController : Controller
     {

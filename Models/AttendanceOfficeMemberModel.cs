@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SAMS_Deven.Models
+namespace SAMS.Models
 {
     public class AttendanceOfficeMemberModel
     {

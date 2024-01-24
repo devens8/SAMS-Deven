@@ -1,4 +1,4 @@
-namespace SAMS_Deven.Models
+namespace SAMS.Models
 {
     public class ErrorViewModel
     {

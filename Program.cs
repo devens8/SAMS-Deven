@@ -1,18 +1,22 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SAMS_Deven.Data;
+using SAMS.Controllers;
+using SAMS.Data;
+using System.Drawing.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//Account Confirmed Service
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -20,15 +24,11 @@ builder.Services.AddControllersWithViews();
 
 //Google Authentication Service
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-{
-    IConfigurationSection googleAuthNSection = builder.Configuration.GetSection("Authentication:Google");
-#pragma warning disable CS8601 // Possible null reference assignment.
-    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-#pragma warning restore CS8601 // Possible null reference assignment.
-#pragma warning disable CS8601 // Possible null reference assignment.
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-#pragma warning restore CS8601 // Possible null reference assignment.
-});
+   {
+       IConfigurationSection googleAuthNSection = builder.Configuration.GetSection("Authentication:Google");
+       googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+       googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+   });
 
 var app = builder.Build();
 
@@ -49,6 +49,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

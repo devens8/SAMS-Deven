@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace SAMS_Deven.Data.Migrations
+namespace SAMS.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
