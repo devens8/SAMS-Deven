@@ -47,6 +47,8 @@ namespace SAMS.Data
         public DbSet<RoomScheduleModel> roomScheduleModels { get; set; } = null!;
         public DbSet<ChosenBellSchedModel> chosenBellSchedModels { get; set; } = null!;
 
+        public DbSet<RoomCodeModel> roomCodeModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -377,6 +379,13 @@ namespace SAMS.Data
                 .WithOne(b => b.Room)
                 .HasForeignKey(c => c.EndLocationID)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RoomLocationInfoModel>()
+                .HasOne(a => a.RoomCode)
+                .WithOne(b => b.RoomLocationInfoModel)
+                .HasForeignKey<RoomLocationInfoModel>(c => c.RoomId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             //Room Schedule Model Relationships
             modelBuilder.Entity<RoomScheduleModel>()
