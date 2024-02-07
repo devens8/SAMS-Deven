@@ -9,6 +9,8 @@
 <div id="video-container">
     <video id="qr-video"></video>
 </div>
+<br />
+<h5 id="textdanger" class="text-danger"></h5>
 
 <b>Detected QR code: </b>
 <span id="cam-qr-result">None</span>
@@ -53,7 +55,10 @@
     // ####### Web Cam Scanning #######
     const scanner = new QrScanner(
         video,
-        (result) => setResult(camQrResult, result),
+        (result) => { 
+            setResult(camQrResult, result);
+                sendScannedData(result);
+        },
         {
             onDecodeError: (error) => {
                 camQrResult.textContent = error;
@@ -124,26 +129,57 @@
     document.getElementById("stop-button").addEventListener("click", () => {
         scanner.stop();
     });
-    var schooliD = @ViewBag.Schoolid;
-    //Transering qr code string to controller
-    var qrCodeData = camQrResult.textContent
-    var qrCodeDataTimestamp = camQrResultTimestamp.textContent;
+    
+    function sendScannedData(result) {
+        var schoolId = @ViewBag.Schoolid;
 
-    var data = {
-        'ScannedCode': qrCodeData,
-        'ScannedCodeTimestamp': qrCodeDataTimestamp,
-        'issuedSchoolId': schoolId
-    };
-    $.ajax({
-        url: '/Home/Scan',
-        type: 'POST',
-        data: data,
-        success: function (response) {
-            console.log(response);
-        }, error: function (response) {
-            console.log(response);
-        }
-    });
+        //Transferring qr code string to controller
+        var qrCodeData = result.data;
+        var qrCodeDataTimestamp = new Date().toString();
+
+        var data = {
+            'ScannedCode': qrCodeData,
+            'ScannedCodeTimestamp': qrCodeDataTimestamp,
+            'issuedSchoolId': schoolId
+        };
+
+        $.ajax({
+            url: '@Url.Action("Scan","Home")',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.redirectUrl) {
+                    window.location.href = response.redirectUrl;
+                }
+            }, error: function (response) {
+                if (response.dangertext) {
+                    alert(response.textdanger);
+                    document.getElementById("textdanger").textContent = response.textdanger;
+                    console.log(response);
+                }
+            }
+        });
+    }
+
+    // //Transering qr code string to controller
+    // var qrCodeData = camQrResult.textContent;
+    // var qrCodeDataTimestamp = camQrResultTimestamp.textContent;
+
+    // var data = {
+    //     'ScannedCode': qrCodeData,
+    //     'ScannedCodeTimestamp': qrCodeDataTimestamp,
+    //     'issuedSchoolId': schoolId
+    // };
+    // $.ajax({
+    //     url: '/Home/Scan',
+    //     type: 'POST',
+    //     data: data,
+    //     success: function (response) {
+    //         console.log(response);
+    //     }, error: function (response) {
+    //         console.log(response);
+    //     }
+    // });
 </script>
 <style>
     div {

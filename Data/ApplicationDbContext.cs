@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +37,6 @@ namespace SAMS.Data
         public DbSet<RoomLocationInfoModel> roomLocationInfoModels { get; set; } = null!;
         public DbSet<StudentInfoModel> studentInfoModels { get; set; } = null!;
         public DbSet<StudentScheduleInfoModel> studentScheduleInfoModels { get; set; } = null!;
-        public DbSet<SubstituteInfoModel> substituteInfoModels { get; set; } = null!;
         public DbSet<SynnLabQRNodeModel> synnLabQRNodeModels { get; set; } = null!;
         public DbSet<TeacherInfoModel> teacherInfoModels { get; set; } = null!;
         public DbSet<TwoHrDelayBellScheduleModel> twoHrDelayBellScheduleModels { get; set; } = null!;
@@ -45,9 +45,8 @@ namespace SAMS.Data
         public DbSet<CourseEnrollmentModel> courseEnrollmentModels { get; set; } = null!;
         public DbSet<DailyAttendanceModel> dailyAttendanceModels { get; set; } = null!;
         public DbSet<RoomScheduleModel> roomScheduleModels { get; set; } = null!;
-        public DbSet<ChosenBellSchedModel> chosenBellSchedModels { get; set; } = null!;
-
-        public DbSet<RoomCodeModel> roomCodeModels { get; set; }
+        public DbSet<ChosenBellSchedModel> ChosenBellSchedModel { get; set; } = null!;
+        public DbSet<RoomQRCodeModel> roomQRCodeModels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -380,10 +379,10 @@ namespace SAMS.Data
                 .HasForeignKey(c => c.EndLocationID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<RoomLocationInfoModel>()
-                .HasOne(a => a.RoomCode)
-                .WithOne(b => b.RoomLocationInfoModel)
-                .HasForeignKey<RoomLocationInfoModel>(c => c.RoomId)
+            modelBuilder.Entity<RoomQRCodeModel>()
+                .HasOne(a => a.Room)
+                .WithOne(b => b.RoomQRCode)
+                .HasForeignKey<RoomQRCodeModel>(c => c.RoomId)
                 .OnDelete(DeleteBehavior.NoAction);
 
 
@@ -432,9 +431,6 @@ namespace SAMS.Data
                 .HasForeignKey(c => c.EnrollmentStudentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //Substitute Info Model Relationships
-            //MAY BRING AN ERROR HERE WHEN ACTUALLY IMPLEMENTING THE SUBSTITUTE TEACHER ALGORITHM
-
             //SynnLab QR Node Model Relationships
             modelBuilder.Entity<SynnLabQRNodeModel>()
                 .HasOne(a => a.Room)
@@ -442,11 +438,6 @@ namespace SAMS.Data
                 .HasForeignKey<SynnLabQRNodeModel>(c => c.SynnlabRoomIDMod)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //Teacher Info Model Relationships
-            modelBuilder.Entity<TeacherInfoModel>()
-                .HasOne(a => a.SubTeacher)
-                .WithMany(b => b.TeacherManaged)
-                .HasForeignKey(c => c.AssignedSubID);
 
             //Teaching Schedule Model Relationships
             modelBuilder.Entity<TeachingScheduleModel>()

@@ -18,29 +18,7 @@ namespace SAMS.Controllers
         public async Task<IActionResult> CreateRole()
         {
             var developer = await _roleManager.CreateAsync(new IdentityRole("Developer"));
-            var hsSchoolAdmin = await _roleManager.CreateAsync(new IdentityRole("HS School Admin"));
-            var synnLabAdmin = await _roleManager.CreateAsync(new IdentityRole("Synnovation Lab Admin"));
-            var EAsupport = await _roleManager.CreateAsync(new IdentityRole("Education Support (EA)"));
-            var AttendanceOffMem = await _roleManager.CreateAsync(new IdentityRole("Attendance Office Member"));
-            var nurse = await _roleManager.CreateAsync(new IdentityRole("Nurse"));
-            var lawEnforce = await _roleManager.CreateAsync(new IdentityRole("Law Enforcement"));
-            var synnQRmanagement = await _roleManager.CreateAsync(new IdentityRole("Synnovation Lab QR code Scanner Management"));
-            var teacher = await _roleManager.CreateAsync(new IdentityRole("Teacher"));
-            var SubTeacher = await _roleManager.CreateAsync(new IdentityRole("Substitute Teacher"));
-            var student = await _roleManager.CreateAsync(new IdentityRole("Student"));
-            var districtAdmin = await _roleManager.CreateAsync(new IdentityRole("District Admin"));
-
-            if (developer.Succeeded && 
-                hsSchoolAdmin.Succeeded && 
-                synnLabAdmin.Succeeded && 
-                EAsupport.Succeeded && 
-                AttendanceOffMem.Succeeded && 
-                nurse.Succeeded && 
-                lawEnforce.Succeeded && 
-                teacher.Succeeded &&
-                SubTeacher.Succeeded &&
-                student.Succeeded &&
-                districtAdmin.Succeeded)
+            if (developer.Succeeded)
             {
                 Console.WriteLine("The Role Creation worked.");
                 return RedirectToAction("Index");

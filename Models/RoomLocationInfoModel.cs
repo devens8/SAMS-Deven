@@ -19,11 +19,11 @@ namespace SAMS.Models
         public int RoomScannerId { get; set; } = 0!;
 
         //Navigation properties
-        public TeacherInfoModel? Teacher {  get; set; }
+        public TeacherInfoModel? Teacher { get; set; }
         public ICollection<ActiveCourseInfoModel>? ActiveCourseInfos { get; set; }
         public ICollection<FastPassModel>? FastPassesIssued { get; set; }
         public RoomScheduleModel? RoomSchedule { get; set; }
         public SynnLabQRNodeModel? SynnLabQRNode { get; set; }
-        public RoomCodeModel? RoomCode { get; set; }
+        public RoomQRCodeModel? RoomQRCode { get; set; } = null!;
     }
 }

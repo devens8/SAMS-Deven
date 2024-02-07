@@ -22,10 +22,10 @@ namespace SAMS.Controllers
         // GET: ChosenBellSchedule
         public async Task<IActionResult> Index()
         {
-            return View(await _context.chosenBellSchedModels.ToListAsync());
+            return View(await _context.ChosenBellSchedModel.ToListAsync());
         }
 
-/*        // GET: ChosenBellSchedule/Details/5
+        // GET: ChosenBellSchedule/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,7 +33,7 @@ namespace SAMS.Controllers
                 return NotFound();
             }
 
-            var chosenBellSchedModel = await _context.chosenBellSchedModels
+            var chosenBellSchedModel = await _context.ChosenBellSchedModel
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (chosenBellSchedModel == null)
             {
@@ -41,9 +41,9 @@ namespace SAMS.Controllers
             }
 
             return View(chosenBellSchedModel);
-        }*/
+        }
 
-/*        // GET: ChosenBellSchedule/Create
+        // GET: ChosenBellSchedule/Create
         public IActionResult Create()
         {
             return View();
@@ -64,7 +64,7 @@ namespace SAMS.Controllers
             }
             return View(chosenBellSchedModel);
         }
-*/
+
         // GET: ChosenBellSchedule/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -73,7 +73,7 @@ namespace SAMS.Controllers
                 return NotFound();
             }
 
-            var chosenBellSchedModel = await _context.chosenBellSchedModels.FindAsync(id);
+            var chosenBellSchedModel = await _context.ChosenBellSchedModel.FindAsync(id);
             if (chosenBellSchedModel == null)
             {
                 return NotFound();
@@ -116,7 +116,7 @@ namespace SAMS.Controllers
             return View(chosenBellSchedModel);
         }
 
-       /* // GET: ChosenBellSchedule/Delete/5
+        // GET: ChosenBellSchedule/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,7 +124,7 @@ namespace SAMS.Controllers
                 return NotFound();
             }
 
-            var chosenBellSchedModel = await _context.chosenBellSchedModels
+            var chosenBellSchedModel = await _context.ChosenBellSchedModel
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (chosenBellSchedModel == null)
             {
@@ -139,19 +139,19 @@ namespace SAMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var chosenBellSchedModel = await _context.chosenBellSchedModels.FindAsync(id);
+            var chosenBellSchedModel = await _context.ChosenBellSchedModel.FindAsync(id);
             if (chosenBellSchedModel != null)
             {
-                _context.chosenBellSchedModels.Remove(chosenBellSchedModel);
+                _context.ChosenBellSchedModel.Remove(chosenBellSchedModel);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-*/
+
         private bool ChosenBellSchedModelExists(int id)
         {
-            return _context.chosenBellSchedModels.Any(e => e.Id == id);
+            return _context.ChosenBellSchedModel.Any(e => e.Id == id);
         }
     }
 }

@@ -5,15 +5,15 @@
 @if ((User?.Identity?.IsAuthenticated == false))
 {
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <h1 class="display-4">Welcome to SynnLab AMS</h1>
+        @* <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
     </div>
 }
 
 <div class="pb-5">
 </div>
 
-@if (User?.IsInRole("Developer") == true)
+@if (User?.IsInRole("Developer") == true || User?.IsInRole("Student") == true)
 {
 
     //STUDENT VIEW
@@ -21,7 +21,7 @@
         <tr class="row">
             <td class="col-5">
                 <div class="card" style="width: 10rem; border-radius:35px;">
-                    <a href="#" class="btn">
+                    <a class="btn" asp-controller="Home" asp-action="Scan">
                         <img src="/images/ScanQRCode.png" class="card-img-top" alt="Phone Call" style="border-radius:35px;">
                         <div class="card-body">
                             <h5 class="card-title">Scan</h5>
