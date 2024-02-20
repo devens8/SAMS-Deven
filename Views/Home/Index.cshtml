@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+
 @if ((User?.Identity?.IsAuthenticated == false))
 {
     <div class="text-center">
@@ -13,10 +15,76 @@
 <div class="pb-5">
 </div>
 
+@if (User?.IsInRole("Teacher") == true)
+{
+
+    //Bell 1-7
+
+    for(int i = 0; i < ViewBag.Bells; i++)
+    {
+        <div class="card" style="width: 10rem; border-radius:35px;">
+            <a class="btn" asp-controller="AccountManager" asp-action="Index" asp-route-id="@i">
+                <img src="/images/ScanQRCode.png" class="card-img-top" alt="Phone Call" style="border-radius:35px;">
+                <div class="card-body">
+                    <h5 class="card-title">Bell @ViewBag.Bells[i]</h5>
+                </div>
+            </a>
+        </div>
+    }
+
+
+    //Student Info Search
+
+
+    
+}
+
+@if (User?.IsInRole("Admin") == true)
+{
+
+}
+
+
+
+
+
 @if (User?.IsInRole("Developer") == true || User?.IsInRole("Student") == true)
 {
 
+        <table class="table-borderless">
+        <tr class="row">
+            <td class="col-5">
+                <div class="card" style="width: 10rem; border-radius:35px;">
+                    <a class="btn" asp-controller="ChosenBellSchedule" asp-action="Index">
+                        <img src="/images/ScanQRCode.png" class="card-img-top" alt="Phone Call" style="border-radius:35px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Chosen Bell Schedule</h5>
+                        </div>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table>
+
     //STUDENT VIEW
+    <table class="table-borderless">
+        <tr class="row">
+            <td class="col-5">
+                <div class="card" style="width: 10rem; border-radius:35px;">
+                    <a class="btn" asp-controller="AccountManager" asp-action="Index">
+                        <img src="/images/ScanQRCode.png" class="card-img-top" alt="Phone Call" style="border-radius:35px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Account Manager</h5>
+                        </div>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <br />
+
     <table class="table-borderless">
         <tr class="row">
             <td class="col-5">

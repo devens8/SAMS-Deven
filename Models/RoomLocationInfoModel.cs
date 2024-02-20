@@ -13,8 +13,7 @@ namespace SAMS.Models
         public string WingNameMod { get; set; } = null!;
         [Display(Name = ("Room Code"))]
         public string RoomCodeMod { get; set; } = null!;
-        [Display(Name = ("Assigned To"))]
-        public string RoomAssignedToTeacherID { get; set; } = null!;
+
         [Display(Name = ("Scanner ID"))]
         public int RoomScannerId { get; set; } = 0!;
 

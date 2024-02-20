@@ -21,8 +21,9 @@ namespace SAMS.Models
         public string TeacherPhoneMod { get; set; } = null!;
         [Display(Name = ("Teaches all 5 days?"))]
         public Boolean Teaches5Days { get; set; }
-        [Display(Name = ("Teaching Schedule ID"))]
-        public int TeachingScheduleID { get; set; } = 0!;
+        [Display(Name = ("Room ID"))]
+        public int? RoomAssigned { get; set; } = 0!;
+
 
 
         //Navigation properties

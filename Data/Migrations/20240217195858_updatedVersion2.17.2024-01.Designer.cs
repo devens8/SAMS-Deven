@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SAMS.Data;
 
@@ -11,9 +12,11 @@ using SAMS.Data;
 namespace SAMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240217195858_updatedVersion2.17.2024-01")]
+    partial class updatedVersion217202401
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,9 +206,6 @@ namespace SAMS.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SchoolId")
                         .HasColumnType("nvarchar(max)");
@@ -848,6 +848,10 @@ namespace SAMS.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
+                    b.Property<string>("RoomAssignedToTeacherID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("RoomCodeMod")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -864,6 +868,9 @@ namespace SAMS.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoomId");
+
+                    b.HasIndex("RoomAssignedToTeacherID")
+                        .IsUnique();
 
                     b.ToTable("roomLocationInfoModels");
                 });
@@ -1063,9 +1070,6 @@ namespace SAMS.Data.Migrations
                     b.Property<string>("TeacherID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("RoomAssigned")
-                        .HasColumnType("int");
-
                     b.Property<string>("TeacherEmailMod")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1093,11 +1097,10 @@ namespace SAMS.Data.Migrations
                     b.Property<bool>("Teaches5Days")
                         .HasColumnType("bit");
 
-                    b.HasKey("TeacherID");
+                    b.Property<int>("TeachingScheduleID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("RoomAssigned")
-                        .IsUnique()
-                        .HasFilter("[RoomAssigned] IS NOT NULL");
+                    b.HasKey("TeacherID");
 
                     b.ToTable("teacherInfoModels");
                 });
@@ -1514,6 +1517,17 @@ namespace SAMS.Data.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("SAMS.Models.RoomLocationInfoModel", b =>
+                {
+                    b.HasOne("SAMS.Models.TeacherInfoModel", "Teacher")
+                        .WithOne("Room")
+                        .HasForeignKey("SAMS.Models.RoomLocationInfoModel", "RoomAssignedToTeacherID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("SAMS.Models.RoomQRCodeModel", b =>
                 {
                     b.HasOne("SAMS.Models.RoomLocationInfoModel", "Room")
@@ -1594,16 +1608,6 @@ namespace SAMS.Data.Migrations
                         .HasForeignKey("SAMS.Models.SynnLabQRNodeModel", "SynnlabRoomIDMod")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("SAMS.Models.TeacherInfoModel", b =>
-                {
-                    b.HasOne("SAMS.Models.RoomLocationInfoModel", "Room")
-                        .WithOne("Teacher")
-                        .HasForeignKey("SAMS.Models.TeacherInfoModel", "RoomAssigned")
-                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Room");
                 });
@@ -1697,8 +1701,6 @@ namespace SAMS.Data.Migrations
                     b.Navigation("RoomSchedule");
 
                     b.Navigation("SynnLabQRNode");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SAMS.Models.StudentInfoModel", b =>
@@ -1738,6 +1740,8 @@ namespace SAMS.Data.Migrations
                     b.Navigation("RequestAddressedHallPasses");
 
                     b.Navigation("RequestAssignedHallPasses");
+
+                    b.Navigation("Room");
 
                     b.Navigation("RoomSchedules");
 

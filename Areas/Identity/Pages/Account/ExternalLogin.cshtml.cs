@@ -131,6 +131,10 @@ namespace SAMS.Areas.Identity.Pages.Account
                         {
                             _logger.LogInformation("THE ACCOUNT IS NOT LOCKED OUT.");
                             _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
+                            if(User?.IsInRole("Teacher") == true)
+                            {
+                                returnUrl = Url.Action("TeacherDashboard", "Dashboard");
+                            }
                             return LocalRedirect(returnUrl);
                         }
                     }

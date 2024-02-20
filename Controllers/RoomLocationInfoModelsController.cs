@@ -10,23 +10,22 @@ using SAMS.Models;
 
 namespace SAMS.Controllers
 {
-    public class RoomLocationInfoController : Controller
+    public class RoomLocationInfoModelsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public RoomLocationInfoController(ApplicationDbContext context)
+        public RoomLocationInfoModelsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: RoomLocationInfo
+        // GET: RoomLocationInfoModels
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.roomLocationInfoModels.Include(r => r.Teacher);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.roomLocationInfoModels.ToListAsync());
         }
 
-        // GET: RoomLocationInfo/Details/5
+        // GET: RoomLocationInfoModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,7 +34,6 @@ namespace SAMS.Controllers
             }
 
             var roomLocationInfoModel = await _context.roomLocationInfoModels
-                .Include(r => r.Teacher)
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (roomLocationInfoModel == null)
             {
@@ -45,19 +43,18 @@ namespace SAMS.Controllers
             return View(roomLocationInfoModel);
         }
 
-        // GET: RoomLocationInfo/Create
+        // GET: RoomLocationInfoModels/Create
         public IActionResult Create()
         {
-            ViewData["RoomAssignedToTeacherID"] = new SelectList(_context.teacherInfoModels, "TeacherID", "TeacherID");
             return View();
         }
 
-        // POST: RoomLocationInfo/Create
+        // POST: RoomLocationInfoModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RoomId,RoomNumberMod,WingNameMod,RoomCodeMod,RoomAssignedToTeacherID,RoomScannerId")] RoomLocationInfoModel roomLocationInfoModel)
+        public async Task<IActionResult> Create([Bind("RoomId,RoomNumberMod,WingNameMod,RoomCodeMod,RoomScannerId")] RoomLocationInfoModel roomLocationInfoModel)
         {
             if (ModelState.IsValid)
             {
@@ -65,11 +62,10 @@ namespace SAMS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoomAssignedToTeacherID"] = new SelectList(_context.teacherInfoModels, "TeacherID", "TeacherID", roomLocationInfoModel.RoomAssignedToTeacherID);
             return View(roomLocationInfoModel);
         }
 
-        // GET: RoomLocationInfo/Edit/5
+        // GET: RoomLocationInfoModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,16 +78,15 @@ namespace SAMS.Controllers
             {
                 return NotFound();
             }
-            ViewData["RoomAssignedToTeacherID"] = new SelectList(_context.teacherInfoModels, "TeacherID", "TeacherID", roomLocationInfoModel.RoomAssignedToTeacherID);
             return View(roomLocationInfoModel);
         }
 
-        // POST: RoomLocationInfo/Edit/5
+        // POST: RoomLocationInfoModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RoomId,RoomNumberMod,WingNameMod,RoomCodeMod,RoomAssignedToTeacherID,RoomScannerId")] RoomLocationInfoModel roomLocationInfoModel)
+        public async Task<IActionResult> Edit(int id, [Bind("RoomId,RoomNumberMod,WingNameMod,RoomCodeMod,RoomScannerId")] RoomLocationInfoModel roomLocationInfoModel)
         {
             if (id != roomLocationInfoModel.RoomId)
             {
@@ -118,11 +113,10 @@ namespace SAMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoomAssignedToTeacherID"] = new SelectList(_context.teacherInfoModels, "TeacherID", "TeacherID", roomLocationInfoModel.RoomAssignedToTeacherID);
             return View(roomLocationInfoModel);
         }
 
-        // GET: RoomLocationInfo/Delete/5
+        // GET: RoomLocationInfoModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,7 +125,6 @@ namespace SAMS.Controllers
             }
 
             var roomLocationInfoModel = await _context.roomLocationInfoModels
-                .Include(r => r.Teacher)
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (roomLocationInfoModel == null)
             {
@@ -141,7 +134,7 @@ namespace SAMS.Controllers
             return View(roomLocationInfoModel);
         }
 
-        // POST: RoomLocationInfo/Delete/5
+        // POST: RoomLocationInfoModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

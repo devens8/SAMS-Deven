@@ -22,7 +22,8 @@ namespace SAMS.Controllers
         // GET: TeacherInfoModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.teacherInfoModels.ToListAsync());
+            var applicationDbContext = _context.teacherInfoModels.Include(t => t.Room);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: TeacherInfoModels/Details/5
@@ -34,6 +35,7 @@ namespace SAMS.Controllers
             }
 
             var teacherInfoModel = await _context.teacherInfoModels
+                .Include(t => t.Room)
                 .FirstOrDefaultAsync(m => m.TeacherID == id);
             if (teacherInfoModel == null)
             {
@@ -46,6 +48,7 @@ namespace SAMS.Controllers
         // GET: TeacherInfoModels/Create
         public IActionResult Create()
         {
+            ViewData["RoomAssigned"] = new SelectList(_context.roomLocationInfoModels, "RoomId", "RoomId");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace SAMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TeacherID,TeacherFirstNameMod,TeacherMiddleNameMod,TeacherLastNameMod,TeacherPreferredNameMod,TeacherEmailMod,TeacherPhoneMod,Teaches5Days,TeachingScheduleID")] TeacherInfoModel teacherInfoModel)
+        public async Task<IActionResult> Create([Bind("TeacherID,TeacherFirstNameMod,TeacherMiddleNameMod,TeacherLastNameMod,TeacherPreferredNameMod,TeacherEmailMod,TeacherPhoneMod,Teaches5Days,RoomAssigned")] TeacherInfoModel teacherInfoModel)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace SAMS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RoomAssigned"] = new SelectList(_context.roomLocationInfoModels, "RoomId", "RoomId", teacherInfoModel.RoomAssigned);
             return View(teacherInfoModel);
         }
 
@@ -78,6 +82,7 @@ namespace SAMS.Controllers
             {
                 return NotFound();
             }
+            ViewData["RoomAssigned"] = new SelectList(_context.roomLocationInfoModels, "RoomId", "RoomId", teacherInfoModel.RoomAssigned);
             return View(teacherInfoModel);
         }
 
@@ -86,7 +91,7 @@ namespace SAMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("TeacherID,TeacherFirstNameMod,TeacherMiddleNameMod,TeacherLastNameMod,TeacherPreferredNameMod,TeacherEmailMod,TeacherPhoneMod,Teaches5Days,TeachingScheduleID")] TeacherInfoModel teacherInfoModel)
+        public async Task<IActionResult> Edit(string id, [Bind("TeacherID,TeacherFirstNameMod,TeacherMiddleNameMod,TeacherLastNameMod,TeacherPreferredNameMod,TeacherEmailMod,TeacherPhoneMod,Teaches5Days,RoomAssigned")] TeacherInfoModel teacherInfoModel)
         {
             if (id != teacherInfoModel.TeacherID)
             {
@@ -113,6 +118,7 @@ namespace SAMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RoomAssigned"] = new SelectList(_context.roomLocationInfoModels, "RoomId", "RoomId", teacherInfoModel.RoomAssigned);
             return View(teacherInfoModel);
         }
 
@@ -125,6 +131,7 @@ namespace SAMS.Controllers
             }
 
             var teacherInfoModel = await _context.teacherInfoModels
+                .Include(t => t.Room)
                 .FirstOrDefaultAsync(m => m.TeacherID == id);
             if (teacherInfoModel == null)
             {

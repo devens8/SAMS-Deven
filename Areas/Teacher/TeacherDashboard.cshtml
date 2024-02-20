@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Dashboard";
+
+}
+
+@*
+
+    //Bell 1-7
+
+ 
+*@
+
+    @for(int i = 0; i < ViewBag.Bells; i++)
+    {
+        <div class="card" style="width: 10rem; border-radius:35px;">
+            <a class="btn" asp-controller="Dashboard" asp-action="TeacherDashboard" asp-route-id="@i">
+                <img src="/images/ScanQRCode.png" class="card-img-top" alt="Phone Call" style="border-radius:35px;">
+                <div class="card-body">
+                    <h5 class="card-title">Bell @ViewBag.Bells[i]</h5>
+                </div>
+            </a>
+        </div>
+    }
+
+@*
+
+    //Student Info
+
+*@
+
+
+

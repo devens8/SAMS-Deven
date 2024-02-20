@@ -361,11 +361,6 @@ namespace SAMS.Data
             //Pep Rally Bell Schedule Model Relationships - NA
 
             //Room Location Info Model Relationships
-            modelBuilder.Entity<RoomLocationInfoModel>()
-                .HasOne(a => a.Teacher)
-                .WithOne(b => b.Room)
-                .HasForeignKey<RoomLocationInfoModel>(c => c.RoomAssignedToTeacherID)
-                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<RoomLocationInfoModel>()
                 .HasMany(a => a.ActiveCourseInfos)
@@ -438,7 +433,6 @@ namespace SAMS.Data
                 .HasForeignKey<SynnLabQRNodeModel>(c => c.SynnlabRoomIDMod)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
             //Teaching Schedule Model Relationships
             modelBuilder.Entity<TeachingScheduleModel>()
                 .HasOne(a => a.Teacher)
@@ -446,8 +440,15 @@ namespace SAMS.Data
                 .HasForeignKey<TeachingScheduleModel>(c => c.TeacherID)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            //Teacher Info Model Relationships
+            modelBuilder.Entity<TeacherInfoModel>()
+                .HasOne(a => a.Room)
+                .WithOne(b => b.Teacher)
+                .HasForeignKey<TeacherInfoModel>(c => c.RoomAssigned)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
+
         }
 
         public DbSet<SAMS.Models.TeachingScheduleModel>? TeachingScheduleModel { get; set; }

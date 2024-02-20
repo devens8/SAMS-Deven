@@ -49,9 +49,9 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="TeachingScheduleID" class="control-label"></label>
-                <input asp-for="TeachingScheduleID" class="form-control" />
-                <span asp-validation-for="TeachingScheduleID" class="text-danger"></span>
+                <label asp-for="RoomAssigned" class="control-label"></label>
+                <select asp-for="RoomAssigned" class="form-control" asp-items="ViewBag.RoomAssigned"></select>
+                <span asp-validation-for="RoomAssigned" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -64,6 +64,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
